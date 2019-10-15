@@ -65,5 +65,3 @@ class Gift(Base):
             Gift.isbn).order_by(desc(Gift.create_time)).limit(
             current_app.config['RECENT_BOOK_COUNT']).distinct().all()
         return recent_gift
-
-

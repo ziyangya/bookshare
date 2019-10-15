@@ -42,8 +42,18 @@ class RegisterForm(Form):
             raise ValidationError('昵称已经存在')
 
 
+# 重置密码邮箱验证
+class EmailForm(Form):
+    email = StringField(
+        'email',
+        validators=[
+            DataRequired(),
+            length(8, 64),
+            Email(message='电子邮箱不符合规范')
+        ])
 
-class LoginForm(Form):
+
+class LoginForm(EmailForm):
     email = StringField(
         'email',
         validators=[

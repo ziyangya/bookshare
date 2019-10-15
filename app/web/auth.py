@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, flash
 from . import web
-from app.forms.auth import RegisterForm, LoginForm
+from app.forms.auth import RegisterForm, LoginForm, EmailForm
 from app.models.user import User
 from app.models.base import db
 from flask_login import login_user, logout_user
@@ -44,7 +44,15 @@ def login():
 
 @web.route('/reset/password', methods=['GET', 'POST'])
 def forget_password_request():
-    pass
+    form = EmailForm(request.form)
+    if request.method == 'POST':
+        if form.validate():
+            account_email = form.email.data
+            # first_or_404
+            # callable可调用对象，简化对象下方法的调用。模糊了对象和函数的的区别，统一调用接口
+            user = User.query.filter_by(email=account_email).first_or_404()
+        pass
+    return render_template('auth/forget_password_request.html',form=form)
 
 
 @web.route('/reset/password/<token>', methods=['GET', 'POST'])

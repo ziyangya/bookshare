@@ -55,6 +55,8 @@ def forget_password_request():
             user = User.query.filter_by(email=account_email).first_or_404()
             send_mail(form.email.data, '重置你的密码',
                       'email/reset_password.html', user=user, token=user.generate_token())
+            flash('请及时查看你的邮箱'+ account_email+'的重置密码邮件')
+            # return redirect(url_for('web.login'))
     return render_template('auth/forget_password_request.html', form=form)
 
 

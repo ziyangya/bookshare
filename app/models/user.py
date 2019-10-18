@@ -4,15 +4,20 @@
 @Desc :
 @Date : 2019/9/27
 """
+from math import floor
+
 from flask import current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import login_manager
+from app.libs.enums import PendingStatus
 from app.libs.helper import is_isbn_or_key
 from app.models.base import Base, db
 from sqlalchemy import Column, Integer, String, Boolean, Float
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+
+from app.models.drift import Drift
 from app.models.gift import Gift
 from app.models.wish import Wish
 from app.spider.yushu_book import YuShuBook
@@ -47,6 +52,18 @@ class User(UserMixin, Base):
     # 将明文密码hash并且进行比较
     def check_password(self, raw):
         return check_password_hash(self._password, raw)
+
+    # 是否可以发送Drift,鱼豆够多，每索取两本书，自己得送出一本书
+    def can_send_drift(self):
+        if self.beans < 1:
+            return False
+        # 成功送出的书籍数量
+        success_gifts_count = Gift.query.filter_by(
+            uid=self.id, launched=True).count()
+        # 从drift中查询
+        success_receive_count = Drift.query.filter_by(
+            requester_id=self.id, pending=PendingStatus.Success).count()
+        return True if floor(success_receive_count / 2) <= floor(success_gifts_count) else False
 
     # 保存是否赠送的书籍
     def can_save_to_list(self, isbn):
@@ -96,6 +113,16 @@ class User(UserMixin, Base):
             user.password = new_password
         return True
 
+    # 有具体的意义，使用频率高，可以定义在模型下面，如果只是适配一个页面的话，定义在viewmodel下更合适
+    # 用户的简介
+    @property
+    def summary(self):
+        return dict(
+            nickname = self.nickname,
+            beans = self.beans,
+            email = self.email,
+            send_receive=str(self.send_counter) + "/" + str(self.receive_counter)
+        )
 
 @login_manager.user_loader
 def get_user(uid):

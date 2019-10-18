@@ -5,7 +5,7 @@
 @Date : 2019/9/19
 """
 from wtforms import Form, StringField, IntegerField
-from wtforms.validators import length, NumberRange, DataRequired
+from wtforms.validators import length, NumberRange, DataRequired, Regexp
 
 
 class SearchForm(Form):

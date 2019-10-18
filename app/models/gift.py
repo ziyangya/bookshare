@@ -22,6 +22,10 @@ class Gift(Base):
     isbn = Column(String(15))
     launched = Column(Boolean, default=False)
 
+    # 礼物不能是自己的,传入uid与gift模型下的uid比较
+    def is_yourself_gift(self, uid):
+        return True if self.uid == uid else False
+
     # 查询所有礼物
     @classmethod
     def get_user_gifts(cls, uid):

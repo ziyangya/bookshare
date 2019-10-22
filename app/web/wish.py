@@ -5,7 +5,7 @@ from app import db
 from app.libs.email import send_mail
 from app.models.gift import Gift
 from app.models.wish import Wish
-from view_models.trade import MyTrades
+from app.view_models.trade import MyTrades
 # from view_models.wish import MyWishes
 from . import web
 

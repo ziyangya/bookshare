@@ -11,8 +11,8 @@ from app.models.drift import Drift
 from app.models.gift import Gift
 from app.models.user import User
 from app.models.wish import Wish
-from view_models.book import BookViewModel
-from view_models.drift import DriftCollection
+from app.view_models.book import BookViewModel
+from app.view_models.drift import DriftCollection
 from . import web
 
 

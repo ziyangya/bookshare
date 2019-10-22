@@ -4,7 +4,7 @@ from app.libs.enums import PendingStatus
 from app.models.drift import Drift
 from app.models.gift import Gift
 from app.models.base import db
-from view_models.trade import MyTrades
+from app.view_models.trade import MyTrades
 from . import web
 from flask_login import login_required, current_user
 # from view_models.gift import MyGifts

@@ -77,3 +77,7 @@ class ResetPasswordForm(Form):
         EqualTo('password2', message='两次密码不相同')])
     password2 = PasswordField(validators=[
         DataRequired(), Length(6, 32)])
+
+
+class ChangePasswordForm(Form):
+    pass

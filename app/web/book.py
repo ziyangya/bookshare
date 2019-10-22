@@ -11,8 +11,8 @@ from app.libs.helper import is_isbn_or_key
 from app.models.gift import Gift
 from app.models.wish import Wish
 from app.spider.yushu_book import YuShuBook
-from view_models.book import BookCollection, BookViewModel
-from view_models.trade import TradeInfo
+from app.view_models.book import BookCollection, BookViewModel
+from app.view_models.trade import TradeInfo
 from . import web
 
 

@@ -118,11 +118,12 @@ class User(UserMixin, Base):
     @property
     def summary(self):
         return dict(
-            nickname = self.nickname,
-            beans = self.beans,
-            email = self.email,
+            nickname=self.nickname,
+            beans=self.beans,
+            email=self.email,
             send_receive=str(self.send_counter) + "/" + str(self.receive_counter)
         )
+
 
 @login_manager.user_loader
 def get_user(uid):

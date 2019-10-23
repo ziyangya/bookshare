@@ -7,6 +7,11 @@
 
 
 def is_isbn_or_key(word):
+    """
+    判断是isbn还是关键字
+    :param word:
+    :return:
+    """
     isbn_or_key = 'key'
     if len(word) == 13 and word.isdigit():
         isbn_or_key = 'isbn'

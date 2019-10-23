@@ -18,9 +18,6 @@ from . import web
 
 @web.route('/book/search')
 def search():
-    # q = request.args['q']
-    # page = request.args['page']
-
     form = SearchForm(request.args)
     books = BookCollection()
     if form.validate():
